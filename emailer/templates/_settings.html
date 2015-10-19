@@ -1,0 +1,30 @@
+{% import '_includes/forms' as forms %}
+
+{% set all_sections = { '' : '' } %}
+{% for section in craft.sections.getAllSections %}
+  {% set all_sections = all_sections|merge({ ('section:' ~ section.id) : section.name }) %}
+{% endfor %}
+
+{{ forms.selectField({
+  label: 'Email Section',
+  instructions: 'Entries in this section can be sent as emails using the "Send Email" menu action.'|t,
+  options: all_sections,
+  id: 'section',
+  name: 'section',
+  value: settings.section,
+}) }}
+
+{{ forms.textField({
+    label: "Plain Text Template"|t,
+    id: 'textTemplate',
+    name: 'textTemplate',
+    value: settings.textTemplate,
+}) }}
+
+{{ forms.textField({
+    label: "Test Email Recipients"|t,
+    instructions: "Comma separated list of emails where test newsletters should be sent."|t,
+    id: 'testers',
+    name: 'testers',
+    value: settings.testers,
+}) }}
